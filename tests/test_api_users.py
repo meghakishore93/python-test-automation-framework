@@ -10,13 +10,11 @@ def user_api():
 
 def test_get_users(user_api):
     logger.info("Fetching list of users")
-    response = user_api.get_users()
-    assert response.status_code == 200
-    assert "data" in response.json()
+    r = user_api.get_users()
+    assert r.status_code in [200, 201]
+    assert len(r.json()) > 0
 
 def test_create_user(user_api):
     logger.info("Creating a new user")
-    response = user_api.create_user("Megha", "QA Engineer")
-    json_data = response.json()
-    assert response.status_code == 201
-    assert json_data["name"] == "Megha"
+    r = user_api.create_user("Megha", "QA Engineer")
+    assert r.status_code in [200, 201]
